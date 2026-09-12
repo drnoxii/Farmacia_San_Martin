@@ -18,6 +18,7 @@ public class PersonaServiceImpl implements IPersonaServices{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PersonaDto> listarTodo() {
         return this.personaRepository.findAll().stream().map(this::convertToDto).toList();
     }
@@ -29,22 +30,41 @@ public class PersonaServiceImpl implements IPersonaServices{
 
     @Override
     public PersonaDto registrar(PersonaDto p) {
-
-        return null;
+        Persona person= new Persona();
+        person.setNombrePersona(p.nombreP());
+        person.setTipoDocumentoP(p.numeroDocumentoP());
+        person.setNumeroDocumentoP(p.numeroDocumentoP());
+        person.setTelefonoPersona(p.telefonoPersona());
+        person.setDireccionPesona(p.direccionPersona());
+        return this.convertToDto((Persona)this.personaRepository.save(person));
     }
 
     @Override
     public Optional<PersonaDto> actualizar(Long id, PersonaDto p) {
-        return Optional.empty();
+        return this.personaRepository.findById(id).map((pr) ->{
+            pr.setNombrePersona(p.nombreP());
+            pr.setTipoDocumentoP(p.tipoDocumentoP());
+            pr.setNumeroDocumentoP(p.numeroDocumentoP());
+            pr.setTelefonoPersona(p.telefonoPersona());
+            pr.setDireccionPesona(p.direccionPersona());
+            return this.convertToDto((Persona)this.personaRepository.save(pr));
+        });
     }
 
     @Override
     public boolean eliminar(Long id) {
-        return false;
+        if (this.personaRepository.existsById(id)) {
+            this.personaRepository.deleteById(id);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     private PersonaDto convertToDto(Persona p){
-        return new PersonaDto(p.getNombrePersona(),
+        return new PersonaDto(
+                p.getIdPersona(),
+                p.getNombrePersona(),
                 p.getTipoDocumentoP(),
                 p.getNumeroDocumentoP(),
                 p.getTelefonoPersona(),

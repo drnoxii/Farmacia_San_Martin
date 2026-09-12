@@ -1,9 +1,13 @@
 package com.sanmartin.farmacias.Dto;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record PersonaDto(
+        @Parameter(hidden = true)
+        long id,
+
         @NotBlank(message = "El nombre no puede quedar vacío")
         String nombreP,
 
