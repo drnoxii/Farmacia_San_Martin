@@ -3,8 +3,8 @@ spring:
     name: farmacias
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/XE
-    username: Angelo
-    password: Maranatha123P
+    username:
+    password:
     driver-class-name: oracle.jdbc.OracleDriver
 
   jpa:
