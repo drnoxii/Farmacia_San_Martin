@@ -31,22 +31,22 @@ public class PersonaServiceImpl implements IPersonaServices{
     @Override
     public PersonaDto registrar(PersonaDto p) {
         Persona person= new Persona();
-        person.setNombrePersona(p.nombreP());
-        person.setTipoDocumentoP(p.numeroDocumentoP());
-        person.setNumeroDocumentoP(p.numeroDocumentoP());
-        person.setTelefonoPersona(p.telefonoPersona());
-        person.setDireccionPesona(p.direccionPersona());
+        person.setNombre(p.nombre());
+        person.setTipoDocumento(p.tipoDocumento());
+        person.setNumeroDocumento(p.numeroDocumento());
+        person.setTelefono(p.telefono());
+        person.setDireccion(p.telefono());
         return this.convertToDto((Persona)this.personaRepository.save(person));
     }
 
     @Override
     public Optional<PersonaDto> actualizar(Long id, PersonaDto p) {
         return this.personaRepository.findById(id).map((pr) ->{
-            pr.setNombrePersona(p.nombreP());
-            pr.setTipoDocumentoP(p.tipoDocumentoP());
-            pr.setNumeroDocumentoP(p.numeroDocumentoP());
-            pr.setTelefonoPersona(p.telefonoPersona());
-            pr.setDireccionPesona(p.direccionPersona());
+            pr.setNombre(p.nombre());
+            pr.setTipoDocumento(p.tipoDocumento());
+            pr.setNumeroDocumento(p.numeroDocumento());
+            pr.setTelefono(p.telefono());
+            pr.setDireccion(p.direccion());
             return this.convertToDto((Persona)this.personaRepository.save(pr));
         });
     }
@@ -64,10 +64,10 @@ public class PersonaServiceImpl implements IPersonaServices{
     private PersonaDto convertToDto(Persona p){
         return new PersonaDto(
                 p.getIdPersona(),
-                p.getNombrePersona(),
-                p.getTipoDocumentoP(),
-                p.getNumeroDocumentoP(),
-                p.getTelefonoPersona(),
-                p.getDireccionPesona());
+                p.getNombre(),
+                p.getTipoDocumento(),
+                p.getNumeroDocumento(),
+                p.getTelefono(),
+                p.getDireccion());
     }
 }

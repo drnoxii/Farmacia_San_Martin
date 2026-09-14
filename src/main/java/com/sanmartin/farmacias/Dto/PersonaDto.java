@@ -9,20 +9,20 @@ public record PersonaDto(
         long id,
 
         @NotBlank(message = "El nombre no puede quedar vacío")
-        String nombreP,
+        String nombre,
 
         @NotBlank(message = "Este campo no puede quedar vacio")
-        String tipoDocumentoP,
+        String tipoDocumento,
 
         @NotBlank(message = "Este campo no puede quedar vacio")
-        String numeroDocumentoP,
+        String numeroDocumento,
 
         @Pattern(
           regexp = "^9\\d{8}$",
           message = "El telefono debe tener 9 digítos y empezar con 9")
-        String telefonoPersona,
+        String telefono,
 
         @NotBlank(message = "Este campo no puede quedar vacio")
-        String direccionPersona
+        String direccion
 ) {
 }

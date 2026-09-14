@@ -26,8 +26,8 @@ public class Lote {
     @Column(name = "numero_lote", nullable = false, length = 20)
     private String numeroLote;
 
-    @Column(name = "stock_lote", nullable = false, precision = 10, scale = 2)
-    private BigDecimal stockLote= BigDecimal.ZERO;
+    @Column(name = "stock_lote", nullable = false)
+    private Integer stockLote = 0;
 
     @Column(name = "fecha_vencimiento", nullable = false)
     private LocalDate fechaVencimiento;
@@ -39,22 +39,10 @@ public class Lote {
     @Column(nullable = false)
     private EstadoLote estado = EstadoLote.ACTIVO;
 
-    @OneToMany(mappedBy = "lote")
-    private List<DevolucionCompra> devolucionesCompra = new ArrayList<>();
-
-    @OneToMany(mappedBy = "lote")
-    private List<DetalleVenta> detallesVenta = new ArrayList<>();
-
-    @OneToMany(mappedBy = "lote")
-    private List<Merma> mermas = new ArrayList<>();
-
-    @OneToMany(mappedBy = "lote")
-    private List<MovimientoInventario> movimientosInventario = new ArrayList<>();
-
     public Lote() {
     }
 
-    public Lote(Long idLote, Producto producto, DetalleCompra detalleCompra, String numeroLote, BigDecimal stockLote, LocalDate fechaVencimiento, LocalDateTime fechaIngreso, EstadoLote estado, List<DevolucionCompra> devolucionesCompra, List<DetalleVenta> detallesVenta, List<Merma> mermas, List<MovimientoInventario> movimientosInventario) {
+    public Lote(Long idLote, Producto producto, DetalleCompra detalleCompra, String numeroLote, Integer stockLote, LocalDate fechaVencimiento, LocalDateTime fechaIngreso, EstadoLote estado) {
         this.idLote = idLote;
         this.producto = producto;
         this.detalleCompra = detalleCompra;
@@ -63,10 +51,6 @@ public class Lote {
         this.fechaVencimiento = fechaVencimiento;
         this.fechaIngreso = fechaIngreso;
         this.estado = estado;
-        this.devolucionesCompra = devolucionesCompra;
-        this.detallesVenta = detallesVenta;
-        this.mermas = mermas;
-        this.movimientosInventario = movimientosInventario;
     }
 
     public Long getIdLote() {
@@ -101,11 +85,11 @@ public class Lote {
         this.numeroLote = numeroLote;
     }
 
-    public BigDecimal getStockLote() {
+    public Integer getStockLote() {
         return stockLote;
     }
 
-    public void setStockLote(BigDecimal stockLote) {
+    public void setStockLote(Integer stockLote) {
         this.stockLote = stockLote;
     }
 
@@ -131,37 +115,5 @@ public class Lote {
 
     public void setEstado(EstadoLote estado) {
         this.estado = estado;
-    }
-
-    public List<DevolucionCompra> getDevolucionesCompra() {
-        return devolucionesCompra;
-    }
-
-    public void setDevolucionesCompra(List<DevolucionCompra> devolucionesCompra) {
-        this.devolucionesCompra = devolucionesCompra;
-    }
-
-    public List<DetalleVenta> getDetallesVenta() {
-        return detallesVenta;
-    }
-
-    public void setDetallesVenta(List<DetalleVenta> detallesVenta) {
-        this.detallesVenta = detallesVenta;
-    }
-
-    public List<Merma> getMermas() {
-        return mermas;
-    }
-
-    public void setMermas(List<Merma> mermas) {
-        this.mermas = mermas;
-    }
-
-    public List<MovimientoInventario> getMovimientosInventario() {
-        return movimientosInventario;
-    }
-
-    public void setMovimientosInventario(List<MovimientoInventario> movimientosInventario) {
-        this.movimientosInventario = movimientosInventario;
     }
 }

@@ -5,7 +5,5 @@ public enum TipoMovimientoCaja {
     EGRESO,
     VENTA,
     DEVOLUCION,
-    AJUSTE,
-    APERTURA,
-    CIERRE
+    AJUSTE
 }

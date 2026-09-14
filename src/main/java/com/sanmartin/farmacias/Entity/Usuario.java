@@ -20,47 +20,75 @@ public class Usuario {
     @Column(nullable = false, unique = true, length = 100)
     private String correo;
 
-    @Column(name = "contrasena_hash", nullable = false, length = 255)
-    private String contrasenaHash;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idRol", nullable = false)
-    private Rol rol;
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EstadoGeneral estado = EstadoGeneral.ACTIVO;
+    @Column(nullable = false, length = 20)
+    private Rol rol;
+
+
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    @Column(name = "ultimo_acceso")
-    private LocalDateTime ultimoAcceso;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Compra> compras = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Caja> cajas = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<MovimientoCaja> movimientosCaja = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Venta> ventas = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<DevolucionCompra> devolucionesCompra = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<DevolucionVenta> devolucionesVenta = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Merma> mermas = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<MovimientoInventario> movimientosInventario = new ArrayList<>();
-
     public Usuario() {
+    }
+
+    public Usuario(Long idUsuario, Persona persona, String correo, String password, Rol rol, LocalDateTime fechaCreacion) {
+        this.idUsuario = idUsuario;
+        this.persona = persona;
+        this.correo = correo;
+        this.password = password;
+        this.rol = rol;
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }

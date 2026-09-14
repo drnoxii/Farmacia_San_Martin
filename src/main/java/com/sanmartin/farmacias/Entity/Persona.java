@@ -10,27 +10,27 @@ public class Persona {
     private Long idPersona;
 
     @Column(nullable = false, length = 150)
-    private String nombrePersona;
+    private String nombre;
 
     @Column(nullable = false, length = 10)
-    private String tipoDocumentoP;
+    private String tipoDocumento;
 
     @Column(nullable = false, unique = true, length = 15)
-    private String numeroDocumentoP;
+    private String numeroDocumento;
 
-    private String telefonoPersona;
-    private String direccionPesona;
+    private String telefono;
+    private String direccion;
 
     public Persona() {
     }
 
-    public Persona(Long idPersona, String nombrePersona, String tipoDocumentoP, String numeroDocumentoP, String telefonoPersona, String direccionPesona) {
+    public Persona(Long idPersona, String nombre, String tipoDocumento, String numeroDocumento, String telefono, String direccion) {
         this.idPersona = idPersona;
-        this.nombrePersona = nombrePersona;
-        this.tipoDocumentoP = tipoDocumentoP;
-        this.numeroDocumentoP = numeroDocumentoP;
-        this.telefonoPersona = telefonoPersona;
-        this.direccionPesona = direccionPesona;
+        this.nombre = nombre;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.telefono = telefono;
+        this.direccion = direccion;
     }
 
     public Long getIdPersona() {
@@ -41,43 +41,43 @@ public class Persona {
         this.idPersona = idPersona;
     }
 
-    public String getNombrePersona() {
-        return nombrePersona;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombrePersona(String nombrePersona) {
-        this.nombrePersona = nombrePersona;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getTipoDocumentoP() {
-        return tipoDocumentoP;
+    public String getTipoDocumento() {
+        return tipoDocumento;
     }
 
-    public void setTipoDocumentoP(String tipoDocumentoP) {
-        this.tipoDocumentoP = tipoDocumentoP;
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
-    public String getNumeroDocumentoP() {
-        return numeroDocumentoP;
+    public String getNumeroDocumento() {
+        return numeroDocumento;
     }
 
-    public void setNumeroDocumentoP(String numeroDocumentoP) {
-        this.numeroDocumentoP = numeroDocumentoP;
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
     }
 
-    public String getTelefonoPersona() {
-        return telefonoPersona;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setTelefonoPersona(String telefonoPersona) {
-        this.telefonoPersona = telefonoPersona;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getDireccionPesona() {
-        return direccionPesona;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDireccionPesona(String direccionPesona) {
-        this.direccionPesona = direccionPesona;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

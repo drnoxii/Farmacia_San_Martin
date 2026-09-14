@@ -10,26 +10,31 @@ public class Proveedor {
     private Long idProveedor;
 
     @Column(nullable = false, length = 150)
-    private String nombreProv;
+    private String nombre;
 
     @Column(nullable = false, unique = true, length = 11)
-    private String RUCProv;
+    private String ruc;
 
     @Column(nullable = false)
-    private String telfonoProv;
+    private String telefono;
 
     @Column(nullable = false)
-    private String direccionProv;
+    private String direccion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 15)
+    private EstadoGeneral estado = EstadoGeneral.ACTIVO;
 
     public Proveedor() {
     }
 
-    public Proveedor(Long idProveedor, String nombreProv, String RUCProv, String telfonoProv, String direccionProv) {
+    public Proveedor(Long idProveedor, String nombre, String ruc, String telefono, String direccion, EstadoGeneral estado) {
         this.idProveedor = idProveedor;
-        this.nombreProv = nombreProv;
-        this.RUCProv = RUCProv;
-        this.telfonoProv = telfonoProv;
-        this.direccionProv = direccionProv;
+        this.nombre = nombre;
+        this.ruc = ruc;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.estado = estado;
     }
 
     public Long getIdProveedor() {
@@ -40,35 +45,43 @@ public class Proveedor {
         this.idProveedor = idProveedor;
     }
 
-    public String getNombreProv() {
-        return nombreProv;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreProv(String nombreProv) {
-        this.nombreProv = nombreProv;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getRUCProv() {
-        return RUCProv;
+    public String getRuc() {
+        return ruc;
     }
 
-    public void setRUCProv(String RUCProv) {
-        this.RUCProv = RUCProv;
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
-    public String getTelfonoProv() {
-        return telfonoProv;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setTelfonoProv(String telfonoProv) {
-        this.telfonoProv = telfonoProv;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getDireccionProv() {
-        return direccionProv;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDireccionProv(String direccionProv) {
-        this.direccionProv = direccionProv;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public EstadoGeneral getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoGeneral estado) {
+        this.estado = estado;
     }
 }
