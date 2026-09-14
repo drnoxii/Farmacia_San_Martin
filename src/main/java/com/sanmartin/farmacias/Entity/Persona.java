@@ -12,11 +12,8 @@ public class Persona {
     @Column(nullable = false, length = 150)
     private String nombre;
 
-    @Column(nullable = false, length = 10)
-    private String tipoDocumento;
-
-    @Column(nullable = false, unique = true, length = 15)
-    private String numeroDocumento;
+    @Column(nullable = false, unique = true, length = 8)
+    private String dni;
 
     private String telefono;
     private String direccion;
@@ -24,11 +21,10 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(Long idPersona, String nombre, String tipoDocumento, String numeroDocumento, String telefono, String direccion) {
+    public Persona(Long idPersona, String nombre, String dni, String telefono, String direccion) {
         this.idPersona = idPersona;
         this.nombre = nombre;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
+        this.dni = dni;
         this.telefono = telefono;
         this.direccion = direccion;
     }
@@ -49,20 +45,12 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public String getTipoDocumento() {
-        return tipoDocumento;
+    public String getDni() {
+        return dni;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
-    public String getNumeroDocumento() {
-        return numeroDocumento;
-    }
-
-    public void setNumeroDocumento(String numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getTelefono() {

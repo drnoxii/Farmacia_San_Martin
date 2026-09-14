@@ -6,9 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IPersonaServices {
-    List<PersonaDto> listarTodo();
-    Optional<PersonaDto> buscarPorId(Long id);
-    PersonaDto registrar(PersonaDto p);
-    Optional<PersonaDto> actualizar(Long id, PersonaDto p);
-    boolean eliminar(Long id);
+    PersonaDto crear(PersonaDto dto);
+
+    PersonaDto obtenerPorId(Long id);
+
+    List<PersonaDto> listar();
+
+    PersonaDto actualizar(Long id, PersonaDto dto);
+
+    void eliminar(Long id);
 }
+
