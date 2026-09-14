@@ -1,10 +1,11 @@
 package com.sanmartin.farmacias.Services;
 
 import com.sanmartin.farmacias.Dto.PersonaDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+@Service
 public interface IPersonaServices {
     PersonaDto crear(PersonaDto dto);
 

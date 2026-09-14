@@ -3,11 +3,13 @@ package com.sanmartin.farmacias.Services;
 import com.sanmartin.farmacias.Dto.ProveedorDto;
 import com.sanmartin.farmacias.Entity.Proveedor;
 import com.sanmartin.farmacias.Repository.ProveedorRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProveedorServicesImpl implements IProveedorServices{
 
     private final ProveedorRepository proveedorRepository;
