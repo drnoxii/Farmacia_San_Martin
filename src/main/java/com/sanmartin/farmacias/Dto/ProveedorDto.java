@@ -1,5 +1,6 @@
 package com.sanmartin.farmacias.Dto;
 
+import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -23,6 +24,9 @@ public record ProveedorDto(
         String telefonoProv,
 
         @NotBlank(message = "Este campo no puede estar vacío")
-        String direccionProv
+        String direccionProv,
+
+        @NotBlank(message = "Este campo no puede estar vacío")
+        EstadoGeneral estadoProv
 ) {
 }
