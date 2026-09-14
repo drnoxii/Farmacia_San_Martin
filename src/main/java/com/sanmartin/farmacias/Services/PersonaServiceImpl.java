@@ -3,6 +3,7 @@ package com.sanmartin.farmacias.Services;
 import com.sanmartin.farmacias.Dto.PersonaDto;
 import com.sanmartin.farmacias.Entity.Persona;
 import com.sanmartin.farmacias.Repository.PersonaRepository;
+import com.sanmartin.farmacias.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,64 +11,99 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PersonaServiceImpl implements IPersonaServices{
+public class PersonaServiceImpl implements IPersonaServices {
+
     private final PersonaRepository personaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public PersonaServiceImpl(PersonaRepository personaRepository) {
+    public PersonaServiceImpl(PersonaRepository personaRepository,
+                              UsuarioRepository usuarioRepository) {
         this.personaRepository = personaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<PersonaDto> listarTodo() {
-        return this.personaRepository.findAll().stream().map(this::convertToDto).toList();
-    }
+    @Transactional
+    public PersonaDto crear(PersonaDto dto) {
 
-    @Override
-    public Optional<PersonaDto> buscarPorId(Long id) {
-        return this.personaRepository.findById(id).map(this::convertToDto);
-    }
-
-    @Override
-    public PersonaDto registrar(PersonaDto p) {
-        Persona person= new Persona();
-        person.setNombre(p.nombre());
-        person.setTipoDocumento(p.tipoDocumento());
-        person.setNumeroDocumento(p.numeroDocumento());
-        person.setTelefono(p.telefono());
-        person.setDireccion(p.telefono());
-        return this.convertToDto((Persona)this.personaRepository.save(person));
-    }
-
-    @Override
-    public Optional<PersonaDto> actualizar(Long id, PersonaDto p) {
-        return this.personaRepository.findById(id).map((pr) ->{
-            pr.setNombre(p.nombre());
-            pr.setTipoDocumento(p.tipoDocumento());
-            pr.setNumeroDocumento(p.numeroDocumento());
-            pr.setTelefono(p.telefono());
-            pr.setDireccion(p.direccion());
-            return this.convertToDto((Persona)this.personaRepository.save(pr));
-        });
-    }
-
-    @Override
-    public boolean eliminar(Long id) {
-        if (this.personaRepository.existsById(id)) {
-            this.personaRepository.deleteById(id);
-            return true;
-        }else {
-            return false;
+        if (personaRepository.existsByDni(dto.dni())) {
+            throw new RuntimeException("Ya existe una persona con ese DNI");
         }
+
+        Persona persona = new Persona();
+        persona.setDni(dto.dni());
+        persona.setNombre(dto.nombre());
+        persona.setTelefono(dto.telefono());
+        persona.setDireccion(dto.direccion());
+
+        persona = personaRepository.save(persona);
+        return toDTO(persona);
     }
 
-    private PersonaDto convertToDto(Persona p){
+    @Override
+    public PersonaDto obtenerPorId(Long id) {
+        Persona persona = personaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+        return toDTO(persona);
+    }
+
+
+    @Override
+    public List<PersonaDto> listar() {
+        return personaRepository.findAll().stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
+
+    @Override
+    @Transactional
+    public PersonaDto actualizar(Long id, PersonaDto dto) {
+
+        Persona persona = personaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+        if (!persona.getDni().equals(dto.dni())
+                && personaRepository.existsByDni(dto.dni())) {
+            throw new RuntimeException("Ya existe otra persona con ese DNI");
+        }
+
+        persona.setDni(dto.dni());
+        persona.setNombre(dto.nombre());
+        persona.setTelefono(dto.telefono());
+        persona.setDireccion(dto.direccion());
+
+        persona = personaRepository.save(persona);
+        return toDTO(persona);
+    }
+
+
+    @Override
+    @Transactional
+    public void eliminar(Long id) {
+
+        Persona persona = personaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+        boolean tieneUsuario = usuarioRepository.findAll().stream()
+                .anyMatch(u -> u.getPersona() != null
+                        && u.getPersona().getIdPersona().equals(id));
+
+        if (tieneUsuario) {
+            throw new RuntimeException("No se puede eliminar: la persona tiene un usuario asociado");
+        }
+
+        personaRepository.delete(persona);
+    }
+
+
+    private PersonaDto toDTO(Persona persona) {
         return new PersonaDto(
-                p.getIdPersona(),
-                p.getNombre(),
-                p.getTipoDocumento(),
-                p.getNumeroDocumento(),
-                p.getTelefono(),
-                p.getDireccion());
+                persona.getIdPersona(),
+                persona.getDni(),
+                persona.getNombre(),
+                persona.getTelefono(),
+                persona.getDireccion()
+        );
     }
 }
