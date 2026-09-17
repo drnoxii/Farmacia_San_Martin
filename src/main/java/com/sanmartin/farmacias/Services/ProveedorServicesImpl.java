@@ -25,11 +25,13 @@ public class ProveedorServicesImpl implements IProveedorServices{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<ProveedorDto> buscarPorId(Long id) {
         return this.proveedorRepository.findById(id).map(this::convertToDto);
     }
 
     @Override
+    @Transactional
     public ProveedorDto registrar(ProveedorDto pr) {
         Proveedor prov = new Proveedor();
         prov.setNombre(pr.nombreProv());
@@ -41,6 +43,7 @@ public class ProveedorServicesImpl implements IProveedorServices{
     }
 
     @Override
+    @Transactional
     public Optional<ProveedorDto> actualizar(Long id, ProveedorDto pr) {
         return this.proveedorRepository.findById(id).map(prov -> {
             prov.setNombre(pr.nombreProv());
