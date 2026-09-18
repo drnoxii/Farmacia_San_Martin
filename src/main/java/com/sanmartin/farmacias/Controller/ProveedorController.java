@@ -37,7 +37,7 @@ public class ProveedorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProveedorDto> actualizar(@PathVariable Long id, @Valid ProveedorDto dto){
+    public ResponseEntity<ProveedorDto> actualizar(@PathVariable Long id, @Valid @RequestBody ProveedorDto dto){
         return (ResponseEntity)this.proveedorServices.actualizar(id, dto).map(ResponseEntity::ok).orElseThrow(() -> new ResourceNotFoundException("No se pudo actualiza el registro del Proveedor con ID: "+id));
     }
 
