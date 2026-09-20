@@ -17,10 +17,6 @@ public class DetalleVenta {
     private Venta venta;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idProducto", nullable = false)
-    private Producto producto;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idLote", nullable = false)
     private Lote lote;
 
@@ -30,25 +26,30 @@ public class DetalleVenta {
     @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal descuento = BigDecimal.ZERO;
-
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(
+            name = "subtotal",
+            precision = 12,
+            scale = 2,
+            insertable = false,
+            updatable = false
+    )
     private BigDecimal subtotal;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", length = 1, columnDefinition = "CHAR(1)")
+    private EstadoDetalleVenta estado;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(Long idDetalleVenta, Venta venta, Producto producto, Lote lote, BigDecimal cantidad, BigDecimal precioUnitario, BigDecimal descuento, BigDecimal subtotal) {
+    public DetalleVenta(Long idDetalleVenta, Venta venta, Lote lote, BigDecimal cantidad, BigDecimal precioUnitario, BigDecimal subtotal, EstadoDetalleVenta estado) {
         this.idDetalleVenta = idDetalleVenta;
         this.venta = venta;
-        this.producto = producto;
         this.lote = lote;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
-        this.descuento = descuento;
         this.subtotal = subtotal;
+        this.estado = estado;
     }
 
     public Long getIdDetalleVenta() {
@@ -65,14 +66,6 @@ public class DetalleVenta {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
     }
 
     public Lote getLote() {
@@ -99,19 +92,19 @@ public class DetalleVenta {
         this.precioUnitario = precioUnitario;
     }
 
-    public BigDecimal getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(BigDecimal descuento) {
-        this.descuento = descuento;
-    }
-
     public BigDecimal getSubtotal() {
         return subtotal;
     }
 
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public EstadoDetalleVenta getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoDetalleVenta estado) {
+        this.estado = estado;
     }
 }

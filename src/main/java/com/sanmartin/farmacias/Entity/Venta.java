@@ -31,14 +31,15 @@ public class Venta {
     private String numeroVenta;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipoComprobante", length = 20)
+    private TipoComprobante tipoComprobante;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "metodo_pago", nullable = false, length = 20)
     private MetodoPago metodoPago;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal subtotal = BigDecimal.ZERO;
-
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal igv = BigDecimal.ZERO;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
@@ -64,7 +65,6 @@ public class Venta {
         this.numeroVenta = numeroVenta;
         this.metodoPago = metodoPago;
         this.subtotal = subtotal;
-        this.igv = igv;
         this.total = total;
         this.estado = estado;
         this.fechaVenta = fechaVenta;
@@ -125,14 +125,6 @@ public class Venta {
 
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
-    }
-
-    public BigDecimal getIgv() {
-        return igv;
-    }
-
-    public void setIgv(BigDecimal igv) {
-        this.igv = igv;
     }
 
     public BigDecimal getTotal() {
