@@ -1,10 +1,10 @@
 spring:
   application:
-    name: farmacias
+    name: Farmacia_Proyecto
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/XE
-    username:
-    password:
+    username: FARMACIA
+    password: tpp
     driver-class-name: oracle.jdbc.OracleDriver
 
   jpa:
