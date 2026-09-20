@@ -32,8 +32,6 @@ public class Lote {
     @Column(name = "fecha_vencimiento", nullable = false)
     private LocalDate fechaVencimiento;
 
-    @Column(name = "fecha_ingreso", nullable = false)
-    private LocalDateTime fechaIngreso=LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -49,7 +47,6 @@ public class Lote {
         this.numeroLote = numeroLote;
         this.stockLote = stockLote;
         this.fechaVencimiento = fechaVencimiento;
-        this.fechaIngreso = fechaIngreso;
         this.estado = estado;
     }
 
@@ -99,14 +96,6 @@ public class Lote {
 
     public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
-    }
-
-    public LocalDateTime getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(LocalDateTime fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
     }
 
     public EstadoLote getEstado() {
