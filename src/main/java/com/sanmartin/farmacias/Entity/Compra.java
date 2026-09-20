@@ -15,15 +15,6 @@ public class Compra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCompra;
 
-    @Column(name = "fecha_compra", nullable = false)
-    private LocalDateTime fechaCompra = LocalDateTime.now();
-
-    @Column(name = "numero_factura", length = 30)
-    private String numeroFactura;
-
-    @Column(nullable = false)
-    private BigDecimal totalCompra;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idProveedor", nullable = false)
     private Proveedor proveedor;
@@ -32,11 +23,14 @@ public class Compra {
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal subtotal = BigDecimal.ZERO;
+    @Column(name = "fecha_compra", nullable = false)
+    private LocalDateTime fechaCompra = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private BigDecimal totalCompra;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal igv = BigDecimal.ZERO;
+    private BigDecimal subtotal = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 15)
@@ -48,15 +42,13 @@ public class Compra {
     public Compra() {
     }
 
-    public Compra(Long idCompra, LocalDateTime fechaCompra, String numeroFactura, BigDecimal totalCompra, Proveedor proveedor, Usuario usuario, BigDecimal subtotal, BigDecimal igv, EstadoCompra estado, List<DetalleCompra> detalles) {
+    public Compra(Long idCompra, Proveedor proveedor, Usuario usuario, LocalDateTime fechaCompra, BigDecimal totalCompra, BigDecimal subtotal, EstadoCompra estado, List<DetalleCompra> detalles) {
         this.idCompra = idCompra;
-        this.fechaCompra = fechaCompra;
-        this.numeroFactura = numeroFactura;
-        this.totalCompra = totalCompra;
         this.proveedor = proveedor;
         this.usuario = usuario;
+        this.fechaCompra = fechaCompra;
+        this.totalCompra = totalCompra;
         this.subtotal = subtotal;
-        this.igv = igv;
         this.estado = estado;
         this.detalles = detalles;
     }
@@ -67,30 +59,6 @@ public class Compra {
 
     public void setIdCompra(Long idCompra) {
         this.idCompra = idCompra;
-    }
-
-    public LocalDateTime getFechaCompra() {
-        return fechaCompra;
-    }
-
-    public void setFechaCompra(LocalDateTime fechaCompra) {
-        this.fechaCompra = fechaCompra;
-    }
-
-    public String getNumeroFactura() {
-        return numeroFactura;
-    }
-
-    public void setNumeroFactura(String numeroFactura) {
-        this.numeroFactura = numeroFactura;
-    }
-
-    public BigDecimal getTotalCompra() {
-        return totalCompra;
-    }
-
-    public void setTotalCompra(BigDecimal totalCompra) {
-        this.totalCompra = totalCompra;
     }
 
     public Proveedor getProveedor() {
@@ -109,20 +77,28 @@ public class Compra {
         this.usuario = usuario;
     }
 
+    public LocalDateTime getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(LocalDateTime fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+
+    public BigDecimal getTotalCompra() {
+        return totalCompra;
+    }
+
+    public void setTotalCompra(BigDecimal totalCompra) {
+        this.totalCompra = totalCompra;
+    }
+
     public BigDecimal getSubtotal() {
         return subtotal;
     }
 
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
-    }
-
-    public BigDecimal getIgv() {
-        return igv;
-    }
-
-    public void setIgv(BigDecimal igv) {
-        this.igv = igv;
     }
 
     public EstadoCompra getEstado() {

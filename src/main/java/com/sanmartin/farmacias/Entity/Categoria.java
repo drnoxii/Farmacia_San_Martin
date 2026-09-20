@@ -18,17 +18,13 @@ public class Categoria {
     @Column(nullable = false)
     private String descripcionCate;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Producto> productos = new ArrayList<>();
-
     public Categoria() {
     }
 
-    public Categoria(Long idCategoria, String nombreCategoria, String descripcionCate, List<Producto> productos) {
+    public Categoria(Long idCategoria, String nombreCategoria, String descripcionCate) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
         this.descripcionCate = descripcionCate;
-        this.productos = productos;
     }
 
     public Long getIdCategoria() {
@@ -53,13 +49,5 @@ public class Categoria {
 
     public void setDescripcionCate(String descripcionCate) {
         this.descripcionCate = descripcionCate;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
     }
 }
