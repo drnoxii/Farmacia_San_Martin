@@ -17,6 +17,9 @@ public class Producto {
     @Column(nullable = false, length = 100)
     private String nombreProducto;
 
+    @Column(name = "descripcion", length = 255)
+    private String descripcion;
+
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
@@ -25,30 +28,32 @@ public class Producto {
     @JoinColumn(name = "idLaboratorio")
     private Laboratorio laboratorio;
 
-    @Column(nullable = false)
+    @Column(name = "precioCompra", precision = 10, scale = 2)
+    private BigDecimal precioCompra;
+
+    @Column(name = "precioVenta", precision = 10, scale = 2)
     private BigDecimal precioVenta;
 
-    private Integer stockActual;
     private Integer stockMinimo;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
-    private EstadoGeneral estado = EstadoGeneral.ACTIVO;
-
+    @Column(name = "estado", length = 20)
+    private EstadoGeneral estadoGeneral;
 
     public Producto() {
     }
 
-    public Producto(Long idProducto, String codigoBarrasProd, String nombreProducto, Categoria categoria, Laboratorio laboratorio, BigDecimal precioVenta, Integer stockActual, Integer stockMinimo, EstadoGeneral estado) {
+    public Producto(Long idProducto, String codigoBarrasProd, String nombreProducto, String descripcion, Categoria categoria, Laboratorio laboratorio, BigDecimal precioCompra, BigDecimal precioVenta, Integer stockMinimo, EstadoGeneral estadoGeneral) {
         this.idProducto = idProducto;
         this.codigoBarrasProd = codigoBarrasProd;
         this.nombreProducto = nombreProducto;
+        this.descripcion = descripcion;
         this.categoria = categoria;
         this.laboratorio = laboratorio;
+        this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
-        this.stockActual = stockActual;
         this.stockMinimo = stockMinimo;
-        this.estado = estado;
+        this.estadoGeneral = estadoGeneral;
     }
 
     public Long getIdProducto() {
@@ -75,6 +80,14 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -91,20 +104,20 @@ public class Producto {
         this.laboratorio = laboratorio;
     }
 
+    public BigDecimal getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(BigDecimal precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
     public BigDecimal getPrecioVenta() {
         return precioVenta;
     }
 
     public void setPrecioVenta(BigDecimal precioVenta) {
         this.precioVenta = precioVenta;
-    }
-
-    public Integer getStockActual() {
-        return stockActual;
-    }
-
-    public void setStockActual(Integer stockActual) {
-        this.stockActual = stockActual;
     }
 
     public Integer getStockMinimo() {
@@ -115,11 +128,11 @@ public class Producto {
         this.stockMinimo = stockMinimo;
     }
 
-    public EstadoGeneral getEstado() {
-        return estado;
+    public EstadoGeneral getEstadoGeneral() {
+        return estadoGeneral;
     }
 
-    public void setEstado(EstadoGeneral estado) {
-        this.estado = estado;
+    public void setEstadoGeneral(EstadoGeneral estadoGeneral) {
+        this.estadoGeneral = estadoGeneral;
     }
 }

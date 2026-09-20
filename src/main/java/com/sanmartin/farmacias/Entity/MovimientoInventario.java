@@ -32,7 +32,7 @@ public class MovimientoInventario {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "referencia_tipo", length = 25)
-    private ReferenciaMovimiento referenciaTipo;
+    private ReferenciaTipo referenciaTipo;
 
     @Column(name = "referencia_id")
     private Long referenciaId;
@@ -47,7 +47,7 @@ public class MovimientoInventario {
     public MovimientoInventario() {
     }
 
-    public MovimientoInventario(Long idMovimiento, Lote lote, TipoMovimientoInventario tipoMovimiento, BigDecimal cantidad, BigDecimal stockAnterior, BigDecimal stockNuevo, ReferenciaMovimiento referenciaTipo, Long referenciaId, LocalDateTime fecha, Usuario usuario) {
+    public MovimientoInventario(Long idMovimiento, Lote lote, TipoMovimientoInventario tipoMovimiento, BigDecimal cantidad, BigDecimal stockAnterior, BigDecimal stockNuevo, ReferenciaTipo referenciaTipo, Long referenciaId, LocalDateTime fecha, Usuario usuario) {
         this.idMovimiento = idMovimiento;
         this.lote = lote;
         this.tipoMovimiento = tipoMovimiento;
@@ -108,11 +108,11 @@ public class MovimientoInventario {
         this.stockNuevo = stockNuevo;
     }
 
-    public ReferenciaMovimiento getReferenciaTipo() {
+    public ReferenciaTipo getReferenciaTipo() {
         return referenciaTipo;
     }
 
-    public void setReferenciaTipo(ReferenciaMovimiento referenciaTipo) {
+    public void setReferenciaTipo(ReferenciaTipo referenciaTipo) {
         this.referenciaTipo = referenciaTipo;
     }
 

@@ -30,16 +30,21 @@ public class Usuario {
     @Column(name = "fecha_creacion", nullable = false, updatable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", length = 20)
+    private EstadoGeneral estadoGeneral;
+
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, Persona persona, String correo, String password, Rol rol, LocalDateTime fechaCreacion) {
+    public Usuario(Long idUsuario, Persona persona, String correo, String password, Rol rol, LocalDateTime fechaCreacion, EstadoGeneral estadoGeneral) {
         this.idUsuario = idUsuario;
         this.persona = persona;
         this.correo = correo;
         this.password = password;
         this.rol = rol;
         this.fechaCreacion = fechaCreacion;
+        this.estadoGeneral = estadoGeneral;
     }
 
     public Long getIdUsuario() {
@@ -88,5 +93,13 @@ public class Usuario {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public EstadoGeneral getEstadoGeneral() {
+        return estadoGeneral;
+    }
+
+    public void setEstadoGeneral(EstadoGeneral estadoGeneral) {
+        this.estadoGeneral = estadoGeneral;
     }
 }

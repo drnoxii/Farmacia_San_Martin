@@ -16,36 +16,25 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
 
-    @Column(nullable = false, unique = true, length = 8)
-    private String dni;
-
-    @Column(nullable = false, length = 150)
-    private String nombreCompleto;
-
-    @Column(length = 15)
-    private String telefono;
-
-    @Column(length = 250)
-    private String direccion;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idPersona", nullable = false, unique = true)
+    private Persona persona;
 
     @Column(name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "cliente")
-    private List<Venta> ventas = new ArrayList<>();
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", length = 20)
+    private EstadoGeneral estadoGeneral;
 
     public Cliente() {
     }
 
-    public Cliente(Long idCliente, String dni, String nombreCompleto, String telefono, String direccion, LocalDateTime fechaRegistro, List<Venta> ventas) {
+    public Cliente(Long idCliente, Persona persona, LocalDateTime fechaRegistro, EstadoGeneral estadoGeneral) {
         this.idCliente = idCliente;
-        this.dni = dni;
-        this.nombreCompleto = nombreCompleto;
-        this.telefono = telefono;
-        this.direccion = direccion;
+        this.persona = persona;
         this.fechaRegistro = fechaRegistro;
-        this.ventas = ventas;
+        this.estadoGeneral = estadoGeneral;
     }
 
     public Long getIdCliente() {
@@ -56,36 +45,12 @@ public class Cliente {
         this.idCliente = idCliente;
     }
 
-    public String getDni() {
-        return dni;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     public LocalDateTime getFechaRegistro() {
@@ -96,11 +61,11 @@ public class Cliente {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public List<Venta> getVentas() {
-        return ventas;
+    public EstadoGeneral getEstadoGeneral() {
+        return estadoGeneral;
     }
 
-    public void setVentas(List<Venta> ventas) {
-        this.ventas = ventas;
+    public void setEstadoGeneral(EstadoGeneral estadoGeneral) {
+        this.estadoGeneral = estadoGeneral;
     }
 }
