@@ -11,9 +11,6 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProducto;
 
-    @Column(nullable = false, length = 50)
-    private String codigoBarrasProd;
-
     @Column(nullable = false, length = 100)
     private String nombreProducto;
 
@@ -43,9 +40,8 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(Long idProducto, String codigoBarrasProd, String nombreProducto, String descripcion, Categoria categoria, Laboratorio laboratorio, BigDecimal precioCompra, BigDecimal precioVenta, Integer stockMinimo, EstadoGeneral estadoGeneral) {
+    public Producto(Long idProducto, String nombreProducto, String descripcion, Categoria categoria, Laboratorio laboratorio, BigDecimal precioCompra, BigDecimal precioVenta, Integer stockMinimo, EstadoGeneral estadoGeneral) {
         this.idProducto = idProducto;
-        this.codigoBarrasProd = codigoBarrasProd;
         this.nombreProducto = nombreProducto;
         this.descripcion = descripcion;
         this.categoria = categoria;
@@ -62,14 +58,6 @@ public class Producto {
 
     public void setIdProducto(Long idProducto) {
         this.idProducto = idProducto;
-    }
-
-    public String getCodigoBarrasProd() {
-        return codigoBarrasProd;
-    }
-
-    public void setCodigoBarrasProd(String codigoBarrasProd) {
-        this.codigoBarrasProd = codigoBarrasProd;
     }
 
     public String getNombreProducto() {

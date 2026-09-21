@@ -11,6 +11,7 @@ import jakarta.validation.constraints.*;
 public record UsuarioDTO(
 
         @Schema(description = "ID del usuario", example = "1")
+        @Parameter(hidden = true)
         Long idUsuario,
 
         @Schema(description = "ID de la persona", example = "1")

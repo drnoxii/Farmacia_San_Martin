@@ -6,6 +6,7 @@ import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import com.sanmartin.farmacias.Entity.Persona;
 import com.sanmartin.farmacias.Entity.Rol;
 import com.sanmartin.farmacias.Entity.Usuario;
+import com.sanmartin.farmacias.Exception.ResourceNotFoundException;
 import com.sanmartin.farmacias.Repository.PersonaRepository;
 import com.sanmartin.farmacias.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public UsuarioDTO obtenerPorId(Long id) {
         Usuario u = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
         return toDto(u);
     }
 
