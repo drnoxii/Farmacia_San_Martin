@@ -57,12 +57,13 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Long idVenta, Cliente cliente, Caja caja, Usuario usuario, String numeroVenta, MetodoPago metodoPago, BigDecimal subtotal, BigDecimal igv, BigDecimal total, EstadoVenta estado, LocalDateTime fechaVenta, List<DetalleVenta> detalles) {
+    public Venta(Long idVenta, Cliente cliente, Caja caja, Usuario usuario, String numeroVenta, TipoComprobante tipoComprobante, MetodoPago metodoPago, BigDecimal subtotal, BigDecimal total, EstadoVenta estado, LocalDateTime fechaVenta, List<DetalleVenta> detalles) {
         this.idVenta = idVenta;
         this.cliente = cliente;
         this.caja = caja;
         this.usuario = usuario;
         this.numeroVenta = numeroVenta;
+        this.tipoComprobante = tipoComprobante;
         this.metodoPago = metodoPago;
         this.subtotal = subtotal;
         this.total = total;
@@ -109,6 +110,14 @@ public class Venta {
 
     public void setNumeroVenta(String numeroVenta) {
         this.numeroVenta = numeroVenta;
+    }
+
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
     }
 
     public MetodoPago getMetodoPago() {
