@@ -1,8 +1,6 @@
 package com.sanmartin.farmacias.Controller;
 
-import com.sanmartin.farmacias.Dto.PersonaDto;
-import com.sanmartin.farmacias.Exception.ResourceNotFoundException;
-import com.sanmartin.farmacias.Services.IPersonaServices;
+import com.sanmartin.farmacias.Dto.PersonaDTO;
 import com.sanmartin.farmacias.Services.PersonaServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,50 +26,34 @@ public class PersonaController {
 
     @PostMapping
     @Operation(summary = "Crear persona")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Persona creada"),
-            @ApiResponse(responseCode = "400", description = "DNI duplicado o datos inválidos")
-    })
-    public ResponseEntity<PersonaDto> crear(@Valid @RequestBody PersonaDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(personaService.crear(dto));
+    public ResponseEntity<PersonaDTO> crear(@Valid @RequestBody PersonaDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(personaService.crear(dto));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Obtener persona por ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Persona encontrada"),
-            @ApiResponse(responseCode = "404", description = "Persona no encontrada")
-    })
-    public ResponseEntity<PersonaDto> obtener(@PathVariable Long id) {
+    public ResponseEntity<PersonaDTO> obtener(@PathVariable Long id) {
         return ResponseEntity.ok(personaService.obtenerPorId(id));
     }
 
     @GetMapping
-    @Operation(summary = "Listar todas las personas")
-    public ResponseEntity<List<PersonaDto>> listar() {
+    @Operation(summary = "Listar personas")
+    public ResponseEntity<List<PersonaDTO>> listar() {
         return ResponseEntity.ok(personaService.listar());
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar persona")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Persona actualizada"),
-            @ApiResponse(responseCode = "404", description = "Persona no encontrada"),
-            @ApiResponse(responseCode = "400", description = "DNI duplicado o datos inválidos")
-    })
-    public ResponseEntity<PersonaDto> actualizar(
-            @PathVariable Long id,
-            @Valid @RequestBody PersonaDto dto) {
+    public ResponseEntity<PersonaDTO> actualizar(@PathVariable Long id,
+                                                 @Valid @RequestBody PersonaDTO dto) {
         return ResponseEntity.ok(personaService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar persona")
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Persona eliminada"),
-            @ApiResponse(responseCode = "404", description = "Persona no encontrada"),
-            @ApiResponse(responseCode = "400", description = "La persona tiene un usuario asociado")
+            @ApiResponse(responseCode = "204", description = "Eliminada"),
+            @ApiResponse(responseCode = "400", description = "Tiene usuario asociado")
     })
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         personaService.eliminar(id);

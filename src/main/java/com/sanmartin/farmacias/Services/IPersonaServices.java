@@ -1,19 +1,19 @@
 package com.sanmartin.farmacias.Services;
 
-import com.sanmartin.farmacias.Dto.PersonaDto;
+import com.sanmartin.farmacias.Dto.PersonaDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface IPersonaServices {
-    PersonaDto crear(PersonaDto dto);
+    PersonaDTO crear(PersonaDTO dto);
 
-    PersonaDto obtenerPorId(Long id);
+    PersonaDTO obtenerPorId(Long id);
 
-    List<PersonaDto> listar();
+    List<PersonaDTO> listar();
 
-    PersonaDto actualizar(Long id, PersonaDto dto);
+    PersonaDTO actualizar(Long id, PersonaDTO dto);
 
     void eliminar(Long id);
 }

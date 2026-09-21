@@ -1,6 +1,7 @@
 package com.sanmartin.farmacias.Repository;
 
 
+import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import com.sanmartin.farmacias.Entity.Rol;
 import com.sanmartin.farmacias.Entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,15 +13,18 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
-    Optional<Usuario> findByCorreo(String correo);
 
-    boolean existsByCorreo(String correo);
+    boolean existsByCorreo(String usuario);
 
-    Optional<Usuario> findByPersonaDni(String dni);
+    Optional<Usuario> findByUsuario(String usuario);
 
-    boolean existsByPersonaDni(String dni);
+    Optional<Usuario> findByPersonaNumeroDocumento(String numeroDocumento);
 
     List<Usuario> findByRol(Rol rol);
+
+    List<Usuario> findByEstado(EstadoGeneral estado);
+
+    List<Usuario> findByRolAndEstado(Rol rol, EstadoGeneral estado);
 
 
 }

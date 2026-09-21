@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
-    Optional<Persona> findByDni(String dni);
+    Optional<Persona> findByNumeroDocumento(String numeroDocumento);
 
-    boolean existsByDni(String dni);
+    boolean existsByNumeroDocumento(String numeroDocumento);
 }

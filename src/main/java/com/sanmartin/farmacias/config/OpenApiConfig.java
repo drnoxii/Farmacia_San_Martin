@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
     @Bean
     public OpenAPI custoOpenAPI(){
-        return (new OpenAPI()).info((new Info()).title("API Farmacia San Martin").version("1.0").description("Descripcion de las rutas creadas"));
+        return (new OpenAPI()).info((new Info()).title("API Farmacia San Martin")
+                .version("1.0").description("Descripcion de las rutas creadas"));
     }
 }

@@ -1,28 +1,41 @@
 package com.sanmartin.farmacias.Dto;
 
+import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import com.sanmartin.farmacias.Entity.Rol;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
+@Schema(description = "Datos del usuario")
 public record UsuarioDTO(
-        @Parameter(hidden = true)
+
+        @Schema(description = "ID del usuario", example = "1")
         Long idUsuario,
 
-        @NotNull(message = "Este campo no puede estar en blanco")
-        @Valid
-        PersonaDto persona,
+        @Schema(description = "ID de la persona", example = "1")
+        Long idPersona,
 
-        @NotBlank(message = "El correo es obligatorio")
-        @Email(message = "El correo no tiene un formato válido")
-        @Size(min = 6, max = 200)
+        @Schema(description = "DNI", example = "12345678")
+        String numeroDocumento,
+
+        @Schema(description = "Nombre completo", example = "Juan Pérez")
+        String nombre,
+
+        @Schema(description = "Teléfono", example = "999888777")
+        String telefono,
+
+        @Schema(description = "Dirección", example = "Av. Lima 123")
+        String direccion,
+
+        @Schema(description = "Correo", example = "juan@farmacia.com")
         String correo,
 
-        @NotBlank(message = "La contraseña es obligatorio")
-        @Size(min = 6, message = "El contraseña debe tener almenos 6 caracteres")
-        String contraseña,
+        @Schema(description = "Rol", example = "AUXILIAR")
+        Rol rol,
 
-        @NotNull(message = "El rol es obligatorio")
-        Rol rol
+        @Schema(description = "Estado", example = "ACTIVO")
+        EstadoGeneral estado
+
 ) {
 }

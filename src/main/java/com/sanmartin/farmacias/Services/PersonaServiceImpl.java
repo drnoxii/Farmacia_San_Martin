@@ -1,6 +1,6 @@
 package com.sanmartin.farmacias.Services;
 
-import com.sanmartin.farmacias.Dto.PersonaDto;
+import com.sanmartin.farmacias.Dto.PersonaDTO;
 import com.sanmartin.farmacias.Entity.Persona;
 import com.sanmartin.farmacias.Repository.PersonaRepository;
 import com.sanmartin.farmacias.Repository.UsuarioRepository;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonaServiceImpl implements IPersonaServices {
@@ -24,14 +23,14 @@ public class PersonaServiceImpl implements IPersonaServices {
 
     @Override
     @Transactional
-    public PersonaDto crear(PersonaDto dto) {
+    public PersonaDTO crear(PersonaDTO dto) {
 
-        if (personaRepository.existsByDni(dto.dni())) {
+        if (personaRepository.existsByNumeroDocumento(dto.numeroDocumento())) {
             throw new RuntimeException("Ya existe una persona con ese DNI");
         }
 
         Persona persona = new Persona();
-        persona.setDni(dto.dni());
+        persona.setNumeroDocumento(dto.numeroDocumento());
         persona.setNombre(dto.nombre());
         persona.setTelefono(dto.telefono());
         persona.setDireccion(dto.direccion());
@@ -41,7 +40,7 @@ public class PersonaServiceImpl implements IPersonaServices {
     }
 
     @Override
-    public PersonaDto obtenerPorId(Long id) {
+    public PersonaDTO obtenerPorId(Long id) {
         Persona persona = personaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
         return toDTO(persona);
@@ -49,7 +48,7 @@ public class PersonaServiceImpl implements IPersonaServices {
 
 
     @Override
-    public List<PersonaDto> listar() {
+    public List<PersonaDTO> listar() {
         return personaRepository.findAll().stream()
                 .map(this::toDTO)
                 .toList();
@@ -58,17 +57,17 @@ public class PersonaServiceImpl implements IPersonaServices {
 
     @Override
     @Transactional
-    public PersonaDto actualizar(Long id, PersonaDto dto) {
+    public PersonaDTO actualizar(Long id, PersonaDTO dto) {
 
         Persona persona = personaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
 
-        if (!persona.getDni().equals(dto.dni())
-                && personaRepository.existsByDni(dto.dni())) {
+        if (!persona.getNumeroDocumento().equals(dto.numeroDocumento())
+                && personaRepository.existsByNumeroDocumento(dto.numeroDocumento())) {
             throw new RuntimeException("Ya existe otra persona con ese DNI");
         }
 
-        persona.setDni(dto.dni());
+        persona.setNumeroDocumento(dto.numeroDocumento());
         persona.setNombre(dto.nombre());
         persona.setTelefono(dto.telefono());
         persona.setDireccion(dto.direccion());
@@ -97,13 +96,13 @@ public class PersonaServiceImpl implements IPersonaServices {
     }
 
 
-    private PersonaDto toDTO(Persona persona) {
-        return new PersonaDto(
-                persona.getIdPersona(),
-                persona.getDni(),
-                persona.getNombre(),
-                persona.getTelefono(),
-                persona.getDireccion()
+    private PersonaDTO toDTO(Persona p) {
+        return new PersonaDTO(
+                p.getIdPersona(),
+                p.getNumeroDocumento(),
+                p.getNombre(),
+                p.getTelefono(),
+                p.getDireccion()
         );
     }
 }

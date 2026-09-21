@@ -1,22 +1,19 @@
 package com.sanmartin.farmacias.Services;
 
 
-import com.sanmartin.farmacias.Dto.PersonaDto;
 import com.sanmartin.farmacias.Dto.UsuarioDTO;
+import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import com.sanmartin.farmacias.Entity.Persona;
 import com.sanmartin.farmacias.Entity.Rol;
 import com.sanmartin.farmacias.Entity.Usuario;
-import com.sanmartin.farmacias.Exception.DuplicateResourceException;
 import com.sanmartin.farmacias.Repository.PersonaRepository;
 import com.sanmartin.farmacias.Repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UsuarioServiceImpl implements IUsuarioServices{
+public class UsuarioServiceImpl implements IUsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PersonaRepository personaRepository;
 
@@ -26,137 +23,56 @@ public class UsuarioServiceImpl implements IUsuarioServices{
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<UsuarioDTO> listarUsuarios() {
-        return this.usuarioRepository.findAll().stream().map(this::convertToDto).toList();
+    public UsuarioDTO obtenerPorId(Long id) {
+        Usuario u = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return toDto(u);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<UsuarioDTO> buscarUsuarioPorId(Long id) {
-        return this.usuarioRepository.findById(id).map(this::convertToDto);
+    public List<UsuarioDTO> listar() {
+        return usuarioRepository.findAll().stream().map(this::toDto).toList();
     }
 
     @Override
-    @Transactional
-    public UsuarioDTO registrarUsuario(UsuarioDTO us) {
-        //Crear una Excepción personalizada(hecho)
-        if (personaRepository.existsByDni(us.persona().dni())){
-            throw new DuplicateResourceException("Ya existe una persona con ese DNI");
+    public List<UsuarioDTO> listarPorRol(Rol rol) {
+        return usuarioRepository.findByRol(rol).stream().map(this::toDto).toList();
+    }
+
+    @Override
+    public List<UsuarioDTO> listarPorEstado(EstadoGeneral estado) {
+        return usuarioRepository.findByEstado(estado).stream().map(this::toDto).toList();
+    }
+
+    @Override
+    public UsuarioDTO cambiarEstado(Long id, EstadoGeneral estado) {
+        Usuario u = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        u.setEstadoGeneral(estado);         // ← cambio
+        return toDto(usuarioRepository.save(u));
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new RuntimeException("Usuario no encontrado");
         }
-        if (usuarioRepository.existsByCorreo(us.correo())){
-            throw new DuplicateResourceException("Ya existe un usuario con el mismo correo");
-        }
-        //PersonaDto a Persona (Esto puede dar error al levantar el proyecto o al querer crear un usuario/persona)
-        Persona persona= new Persona();
-        persona.setNombre(us.persona().nombre());
-        persona.setDni(us.persona().dni());
-        persona.setTelefono(us.persona().telefono());
-        persona.setDireccion(us.persona().direccion());
+        usuarioRepository.deleteById(id);
 
-        persona = personaRepository.save(persona);
-
-        //Crear un usuario y ponerle la persona
-        Usuario usuario = new Usuario();
-        usuario.setPersona(persona);
-        usuario.setCorreo(us.correo());
-        usuario.setPassword(us.contraseña());
-        usuario.setRol(us.rol());
-
-        usuario= usuarioRepository.save(usuario);
-        return convertToDto(usuario);
     }
 
-    @Override
-    public Optional<UsuarioDTO> actualizarUsuario(Long id, UsuarioDTO us) {
-        return this.usuarioRepository.findById(id).map(user -> {
-            //Actualizar Persona
-            Persona persona = user.getPersona();
-            persona.setNombre(us.persona().nombre());
-            persona.setDni(us.persona().dni());
-            persona.setDireccion(us.persona().direccion());
-            persona.setTelefono(us.persona().telefono());
-            personaRepository.save(persona);
-
-            //Actualizar el Usuario
-            user.setCorreo(us.correo());
-            user.setPassword(us.contraseña());
-            user.setRol(us.rol());
-            usuarioRepository.save(user);
-            return convertToDto(user);
-        });
-    }
-
-    @Override
-    public boolean eliminarUsuario(Long id) {
-        Optional<Usuario> userOpt= usuarioRepository.findById(id);
-        if (userOpt.isEmpty()){
-            return false;
-        }
-        Usuario usuario = userOpt.get();
-        Persona persona = userOpt.get().getPersona();
-
-        //Primero se elimina al que tiene la FK
-        usuarioRepository.delete(usuario);
-        usuarioRepository.flush();//fuerza a que Usuario se elimine primero antes que Persona
-
-        //Después se elimina la Persona relacionada
-        personaRepository.delete(persona);
-        return true;
-
-        /*
-        if (this.usuarioRepository.existsById(id)){
-            Optional<Usuario> userOpt= usuarioRepository.findById(id);
-            Usuario usuario = userOpt.get();
-            Persona persona = userOpt.get().getPersona();
-
-            //Eliminar primero al que tiene la FK
-            usuarioRepository.delete(usuario);//OJO la Caja está relacionada con el Usuario, la eliminación física dará problemas
-            usuarioRepository.flush();//fuerza a que Usuario se elimine primero antes que Persona
-
-            //Eliminar luego la Persona relacionada
-            personaRepository.delete(persona);
-            return true;
-        }else {
-            return false;
-        }
-       */
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<UsuarioDTO> findByCorreo(String correo) {
-        return this.usuarioRepository.findByCorreo(correo).map(this::convertToDto);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<UsuarioDTO> findByPersonaDni(String dni) {
-        return this.usuarioRepository.findByPersonaDni(dni).map(this::convertToDto);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<UsuarioDTO> findByRol(Rol rol) {
-        return this.usuarioRepository.findByRol(rol).stream().map(this::convertToDto).toList();
-    }
-
-    private UsuarioDTO convertToDto (Usuario usuario){
-        Persona persona= usuario.getPersona();
-        PersonaDto personaDto = new PersonaDto(
-                persona.getIdPersona(),
-                persona.getDni(),
-                persona.getNombre(),
-                persona.getTelefono(),
-                persona.getDireccion()
-        );
+    private UsuarioDTO toDto(Usuario u) {
+        Persona p = u.getPersona();
         return new UsuarioDTO(
-                usuario.getIdUsuario(),
-                personaDto,
-                usuario.getCorreo(),
-                usuario.getPassword(),
-                usuario.getRol()
+                u.getIdUsuario(),
+                p.getIdPersona(),
+                p.getNumeroDocumento(),
+                p.getNombre(),
+                p.getTelefono(),
+                p.getDireccion(),
+                u.getCorreo(),
+                u.getRol(),
+                u.getEstadoGeneral()
         );
     }
-
 }
