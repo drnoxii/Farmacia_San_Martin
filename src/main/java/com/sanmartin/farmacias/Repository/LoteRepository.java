@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LoteRepository extends JpaRepository<Lote, Long> {
@@ -34,4 +35,5 @@ public interface LoteRepository extends JpaRepository<Lote, Long> {
         """)
     List<Lote> findPorVencerAntesDe(@Param("fecha") LocalDate fecha);
 
+    Optional<Lote> findByDetalleCompraIdDetalleCompra(Long idDetalleCompra);
 }
