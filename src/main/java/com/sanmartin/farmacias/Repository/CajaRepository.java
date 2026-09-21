@@ -12,9 +12,12 @@ import java.util.Optional;
 @Repository
 public interface CajaRepository extends JpaRepository<Caja,Long> {
 
+    // Para saber si un usuario ya tiene caja abierta
     Optional<Caja> findByUsuarioIdUsuarioAndEstado(Long idUsuario, EstadoCaja estado);
-    List<Caja> findByEstado(EstadoCaja estado);
-    List<Caja> findByFechaAperturaBetween(LocalDateTime desde, LocalDateTime hasta);
-    List<Caja> findByUsuarioIdUsuario(Long idUsuario);
 
+    // Listar por estado
+    List<Caja> findByEstado(EstadoCaja estado);
+
+    // Listar por usuario
+    List<Caja> findByUsuarioIdUsuario(Long idUsuario);
 }
