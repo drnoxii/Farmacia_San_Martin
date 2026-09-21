@@ -16,15 +16,15 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     boolean existsByCorreo(String usuario);
 
-    Optional<Usuario> findByUsuario(String usuario);
+    Optional<Usuario> findByCorreo(String usuario);
 
     Optional<Usuario> findByPersonaNumeroDocumento(String numeroDocumento);
 
     List<Usuario> findByRol(Rol rol);
 
-    List<Usuario> findByEstado(EstadoGeneral estado);
+    List<Usuario> findByEstadoGeneral(EstadoGeneral estado);
 
-    List<Usuario> findByRolAndEstado(Rol rol, EstadoGeneral estado);
+    List<Usuario> findByRolAndEstadoGeneral(Rol rol, EstadoGeneral estado);
 
 
 }

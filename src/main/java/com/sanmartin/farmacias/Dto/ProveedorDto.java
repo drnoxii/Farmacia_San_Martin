@@ -2,31 +2,41 @@ package com.sanmartin.farmacias.Dto;
 
 import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
+@Schema(description = "Datos del proveedor")
 public record ProveedorDto(
-        @Parameter(hidden = true)
-        long idProv,
+        @Schema(description = "ID del proveedor", example = "1")
+        Long idProveedor,
 
-        @NotBlank(message = "Este campo no puede estar vacío")
-        String nombreProv,
+        @Schema(description = "Razón social", example = "Distribuidora Farma SAC")
+        @NotBlank(message = "La razón social es obligatoria")
+        @Size(max = 150)
+        String razonSocial,
 
-        @Pattern(
-          regexp = "^(10|15|17|20)\\d{9}$\n",
-          message = "Ingrese correctamentre "
-        )
-        String rucProv,
+        @Schema(description = "RUC (11 dígitos)", example = "20123456789")
+        @NotBlank(message = "El RUC es obligatorio")
+        @Pattern(regexp = "\\d{11}", message = "El RUC debe tener 11 dígitos")
+        String ruc,
 
-        @Pattern(
-                regexp = "^9\\d{8}$",
-                message = "El telefono debe tener 9 digítos y empezar con 9")
-        String telefonoProv,
+        @Schema(description = "Teléfono", example = "999888777")
+        @Size(max = 15)
+        String telefono,
 
-        @NotBlank(message = "Este campo no puede estar vacío")
-        String direccionProv,
+        @Schema(description = "Correo", example = "ventas@farma.com")
+        @Email(message = "Correo inválido")
+        @Size(max = 100)
+        String correo,
 
-        @NotBlank(message = "Este campo no puede estar vacío")
-        EstadoGeneral estadoProv
+        @Schema(description = "Dirección", example = "Av. Lima 456")
+        @Size(max = 250)
+        String direccion,
+
+        @Schema(description = "Estado", example = "ACTIVO")
+        EstadoGeneral estado
 ) {
 }

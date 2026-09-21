@@ -9,32 +9,36 @@ public class Proveedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProveedor;
 
+    @Column(name = "razon_social", nullable = false, length = 150)
+    private String razonSocial;
+
     @Column(nullable = false, unique = true, length = 11)
     private String ruc;
 
-    @Column(nullable = false, length = 150)
-    private String nombre;
-
-    @Column(nullable = false)
+    @Column(length = 15)
     private String telefono;
 
-    @Column(nullable = false)
+    @Column(length = 100)
+    private String correo;
+
+    @Column(length = 250)
     private String direccion;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado", length = 20)
-    private EstadoGeneral estadoGeneral;
+    @Column(nullable = false, length = 20)
+    private EstadoGeneral estado = EstadoGeneral.ACTIVO;
 
     public Proveedor() {
     }
 
-    public Proveedor(Long idProveedor, String ruc, String nombre, String telefono, String direccion, EstadoGeneral estadoGeneral) {
+    public Proveedor(Long idProveedor, String razonSocial, String ruc, String telefono, String correo, String direccion, EstadoGeneral estado) {
         this.idProveedor = idProveedor;
+        this.razonSocial = razonSocial;
         this.ruc = ruc;
-        this.nombre = nombre;
         this.telefono = telefono;
+        this.correo = correo;
         this.direccion = direccion;
-        this.estadoGeneral = estadoGeneral;
+        this.estado = estado;
     }
 
     public Long getIdProveedor() {
@@ -45,20 +49,20 @@ public class Proveedor {
         this.idProveedor = idProveedor;
     }
 
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
     public String getRuc() {
         return ruc;
     }
 
     public void setRuc(String ruc) {
         this.ruc = ruc;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getTelefono() {
@@ -69,6 +73,14 @@ public class Proveedor {
         this.telefono = telefono;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -77,11 +89,11 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public EstadoGeneral getEstadoGeneral() {
-        return estadoGeneral;
+    public EstadoGeneral getEstado() {
+        return estado;
     }
 
-    public void setEstadoGeneral(EstadoGeneral estadoGeneral) {
-        this.estadoGeneral = estadoGeneral;
+    public void setEstado(EstadoGeneral estado) {
+        this.estado = estado;
     }
 }

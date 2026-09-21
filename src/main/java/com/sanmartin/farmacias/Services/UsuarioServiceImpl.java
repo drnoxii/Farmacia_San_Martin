@@ -41,7 +41,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public List<UsuarioDTO> listarPorEstado(EstadoGeneral estado) {
-        return usuarioRepository.findByEstado(estado).stream().map(this::toDto).toList();
+        return usuarioRepository.findByEstadoGeneral(estado).stream().map(this::toDto).toList();
     }
 
     @Override

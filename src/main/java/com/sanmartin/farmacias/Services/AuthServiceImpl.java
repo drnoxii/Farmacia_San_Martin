@@ -9,7 +9,9 @@ import com.sanmartin.farmacias.Entity.Usuario;
 import com.sanmartin.farmacias.Repository.PersonaRepository;
 import com.sanmartin.farmacias.Repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthServiceImpl implements IAuthService {
 
     private final UsuarioRepository usuarioRepository;
@@ -53,7 +55,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public UsuarioDTO login(LoginDTO dto) {
-        Usuario usuario = usuarioRepository.findByUsuario(dto.correo())
+        Usuario usuario = usuarioRepository.findByCorreo(dto.correo())
                 .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
 
         if (!passwordEncoder.matches(dto.password(), usuario.getPassword())) {
