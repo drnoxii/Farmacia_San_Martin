@@ -1,5 +1,6 @@
 package com.sanmartin.farmacias.Dto;
 
+<<<<<<< Updated upstream
 import com.sanmartin.farmacias.Entity.EstadoGeneral;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,5 +39,36 @@ public record ProveedorDto(
 
         @Schema(description = "Estado", example = "ACTIVO")
         EstadoGeneral estado
+=======
+import com.sanmartin.farmacias.Entity.Enums.EstadoGeneral;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
+
+@Schema(description = "Datos del proveedor")
+public record ProveedorDto(
+
+        @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+        Long idProveedor,
+
+        @NotBlank @Size(max = 150)
+        String razonSocial,
+
+        @NotBlank
+        @Pattern(regexp = "\\d{11}", message = "El RUC debe tener 11 dígitos")
+        String ruc,
+
+        @Size(max = 20)
+        String telefono,
+
+        @Email @Size(max = 150)
+        String correo,
+
+        @Size(max = 250)
+        String direccion,
+
+        @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+        EstadoGeneral estado
+
+>>>>>>> Stashed changes
 ) {
 }

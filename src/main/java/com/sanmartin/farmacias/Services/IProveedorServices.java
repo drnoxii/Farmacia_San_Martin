@@ -1,16 +1,23 @@
 package com.sanmartin.farmacias.Services;
 
 import com.sanmartin.farmacias.Dto.ProveedorDto;
+<<<<<<< Updated upstream
 import org.springframework.stereotype.Service;
 
+=======
+>>>>>>> Stashed changes
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface IProveedorServices {
-    List<ProveedorDto> listarTodo();
-    Optional<ProveedorDto> buscarPorId(Long id);
-    ProveedorDto registrar(ProveedorDto pr);
-    Optional<ProveedorDto> actualizar(Long id, ProveedorDto pr);
-    boolean eliminar(Long id);
+
+    ProveedorDto crear(ProveedorDto dto);
+
+    ProveedorDto obtenerPorId(Long id);
+
+    List<ProveedorDto> listar();
+
+    ProveedorDto actualizar(Long id, ProveedorDto dto);
+
+    void eliminar(Long id);
 }
